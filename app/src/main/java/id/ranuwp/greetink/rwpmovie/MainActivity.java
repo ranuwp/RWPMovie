@@ -29,7 +29,6 @@ import id.ranuwp.greetink.rwpmovie.model.Movie;
 public class MainActivity extends AppCompatActivity implements OnMovieClickListener{
 
     private RecyclerView movie_recyclerview;
-    private GridLayoutManager gridLayoutManager;
     private MovieAdapter movieAdapter;
     private ArrayList<Movie> movies;
     private RequestQueue requestQueue;
@@ -39,49 +38,20 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle(getResources().getString(R.string.popular));
         setupView();
     }
-
-    private int page;
-    private int visibleItemCount;
-    private int totalItemCount;
-    private int pastVisiblesItems;
-    private boolean onLoadMore;
-
 
     private void setupView(){
         movie_recyclerview = (RecyclerView) findViewById(R.id.movie_recyclerview);
         movie_recyclerview.setHasFixedSize(true);
-        movie_recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if(dy>0){
-                    visibleItemCount = gridLayoutManager.getChildCount();
-                    totalItemCount = gridLayoutManager.getItemCount();
-                    pastVisiblesItems = gridLayoutManager.findFirstVisibleItemPosition();
-                    if(!onLoadMore){
-                        if((visibleItemCount+pastVisiblesItems)>= totalItemCount){
-                            onLoadMore = true;
-                            page++;
-                            if(order_by == 0){
-                                loadPopular(page);
-                            }else{
-                                loadTopRated(page);
-                            }
-                        }
-                    }
-                }
-            }
-        });
         movies = new ArrayList<>();
-        gridLayoutManager = new GridLayoutManager(this,2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setAutoMeasureEnabled(false);
         movieAdapter = new MovieAdapter(this,movies,this);
         movie_recyclerview.setLayoutManager(gridLayoutManager);
         movie_recyclerview.setAdapter(movieAdapter);
         requestQueue = Volley.newRequestQueue(this);
-        getSupportActionBar().setTitle("Popular");
         loadPopular(1);
     }
 
@@ -95,14 +65,8 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         movies.clear();
         switch (item.getItemId()){
-            case R.id.refresh :
-                if(order_by == 0){
-                    loadPopular(1);
-                }else{
-                    loadTopRated(1);
-                }
-                break;
             case R.id.order_by :
+                int page;
                 if(order_by == 0){
                     page = 1;
                     getSupportActionBar().setTitle("Top Rated");
@@ -143,8 +107,6 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
                             movieAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }finally {
-                            onLoadMore = false;
                         }
                     }
                 },
@@ -178,8 +140,6 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
                             movieAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }   finally {
-                            onLoadMore = false;
                         }
                     }
                 },

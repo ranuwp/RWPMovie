@@ -1,17 +1,14 @@
 package id.ranuwp.greetink.rwpmovie.model;
 
-import android.os.Build;
-
 import id.ranuwp.greetink.rwpmovie.BuildConfig;
-import id.ranuwp.greetink.rwpmovie.R;
 
 /**
  * Created by ranuwp on 6/16/2017.
  */
 
 public class Constant {
-    public static final String TMDB_POPULAR = "http://api.themoviedb.org/3/movie/popular?api_key="+BuildConfig.TMDB_API_KEY;
-    public static final String TMDB_TOP_RATED = "http://api.themoviedb.org/3/movie/top_rated?api_key="+BuildConfig.TMDB_API_KEY;
+    private static final String TMDB_POPULAR = "http://api.themoviedb.org/3/movie/popular?api_key="+BuildConfig.TMDB_API_KEY;
+    private static final String TMDB_TOP_RATED = "http://api.themoviedb.org/3/movie/top_rated?api_key="+BuildConfig.TMDB_API_KEY;
     public static final String IMAGE_REQUEST_URL = "http://image.tmdb.org/t/p/original/";
 
     public static String getMovieDetailURL(String id){

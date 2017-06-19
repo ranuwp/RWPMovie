@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RWP Movie</string>
+    <string name="backdrop_imageview">Backdrop Image</string>
+    <string name="poster_imageview">Poster Image</string>
+    <string name="loading_textview">Loading… </string>
+    <string name="popular">Popular</string>
 </resources>

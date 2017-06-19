@@ -18,8 +18,8 @@ import id.ranuwp.greetink.rwpmovie.model.Movie;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView poster;
-    View itemView;
+    private ImageView poster;
+    private View itemView;
 
     public MovieViewHolder(View itemView) {
         super(itemView);

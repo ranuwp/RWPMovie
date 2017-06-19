@@ -39,12 +39,12 @@ public class DetailMovieActivity extends AppCompatActivity {
     private TextView release_date_textview;
     private TextView rating_textview;
     private AlertDialog alertDialog;
-    private RequestQueue requestQueue;
     private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_detail_movie);
         String id = getIntent().getExtras().getString("id");
         movie = new Movie();
@@ -56,14 +56,14 @@ public class DetailMovieActivity extends AppCompatActivity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setView(LayoutInflater.from(this).inflate(R.layout.loading_layout,null));
         alertDialog = dialog.create();
-        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
         alertDialog.show();
         backdrop_imageview = (ImageView) findViewById(R.id.backdrop_imageview);
         title_textview = (TextView) findViewById(R.id.title_textview);
         overview_textview = (TextView) findViewById(R.id.overview_textview);
         release_date_textview = (TextView) findViewById(R.id.release_date_textview);
         rating_textview = (TextView) findViewById(R.id.rating_textview);
-        requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 Constant.getMovieDetailURL(movie.getId()),
@@ -77,6 +77,7 @@ public class DetailMovieActivity extends AppCompatActivity {
                             movie.setTitle(response.getString("title"));
                             movie.setVote_average(response.getDouble("vote_average"));
                             movie.setRelease_date(response.getString("release_date"));
+                            getSupportActionBar().setTitle(movie.getTitle());
                             Glide.with(DetailMovieActivity.this).asBitmap().load(movie.getBackdrop_url()).listener(new RequestListener<Bitmap>() {
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {

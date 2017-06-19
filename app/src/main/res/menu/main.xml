@@ -3,13 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/refresh"
-        android:icon="@drawable/ic_refresh"
-        android:title="Refresh"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/order_by"
         android:icon="@drawable/ic_stars"
-        android:title="Popular"
+        android:title="@string/popular"
         app:showAsAction="always" />
 </menu>
