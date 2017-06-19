@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -44,12 +45,10 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
 
     private void setupView(){
         movie_recyclerview = (RecyclerView) findViewById(R.id.movie_recyclerview);
-        movie_recyclerview.setHasFixedSize(true);
         movies = new ArrayList<>();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        gridLayoutManager.setAutoMeasureEnabled(false);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         movieAdapter = new MovieAdapter(this,movies,this);
-        movie_recyclerview.setLayoutManager(gridLayoutManager);
+        movie_recyclerview.setLayoutManager(staggeredGridLayoutManager);
         movie_recyclerview.setAdapter(movieAdapter);
         requestQueue = Volley.newRequestQueue(this);
         loadPopular(1);
@@ -102,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 movie.setId(jsonObject.getString("id"));
                                 movie.setPoster_url(Constant.IMAGE_REQUEST_URL +jsonObject.getString("poster_path"));
+                                movie.setBackdrop_url(Constant.IMAGE_REQUEST_URL+jsonObject.getString("backdrop_path"));
+                                movie.setOverview(jsonObject.getString("overview"));
+                                movie.setTitle(jsonObject.getString("title"));
+                                movie.setVote_average(jsonObject.getDouble("vote_average"));
+                                movie.setRelease_date(jsonObject.getString("release_date"));
                                 movies.add(movie);
                             }
                             movieAdapter.notifyDataSetChanged();
@@ -135,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 movie.setId(jsonObject.getString("id"));
                                 movie.setPoster_url(Constant.IMAGE_REQUEST_URL +jsonObject.getString("poster_path"));
+                                movie.setBackdrop_url(Constant.IMAGE_REQUEST_URL+jsonObject.getString("backdrop_path"));
+                                movie.setOverview(jsonObject.getString("overview"));
+                                movie.setTitle(jsonObject.getString("title"));
+                                movie.setVote_average(jsonObject.getDouble("vote_average"));
+                                movie.setRelease_date(jsonObject.getString("release_date"));
                                 movies.add(movie);
                             }
                             movieAdapter.notifyDataSetChanged();
