@@ -2,9 +2,9 @@ package id.ranuwp.greetink.rwpmovie;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,11 +29,11 @@ import id.ranuwp.greetink.rwpmovie.model.Movie;
 
 public class MainActivity extends AppCompatActivity implements OnMovieClickListener{
 
-    private RecyclerView movie_recyclerview;
+    private RecyclerView movieRecyclerview;
     private MovieAdapter movieAdapter;
     private ArrayList<Movie> movies;
     private RequestQueue requestQueue;
-    private int order_by = 0;
+    private int orderBy = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
     }
 
     private void setupView(){
-        movie_recyclerview = (RecyclerView) findViewById(R.id.movie_recyclerview);
+        movieRecyclerview = (RecyclerView) findViewById(R.id.movie_recyclerview);
         movies = new ArrayList<>();
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         movieAdapter = new MovieAdapter(this,movies,this);
-        movie_recyclerview.setLayoutManager(staggeredGridLayoutManager);
-        movie_recyclerview.setAdapter(movieAdapter);
+        movieRecyclerview.setLayoutManager(staggeredGridLayoutManager);
+        movieRecyclerview.setAdapter(movieAdapter);
         requestQueue = Volley.newRequestQueue(this);
         loadPopular(1);
     }
@@ -66,19 +66,19 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
         switch (item.getItemId()){
             case R.id.order_by :
                 int page;
-                if(order_by == 0){
+                if(orderBy == 0){
                     page = 1;
                     getSupportActionBar().setTitle("Top Rated");
                     item.setIcon(R.drawable.ic_thumb_up);
                     item.setTitle("Top Rated");
-                    order_by = 1;
+                    orderBy = 1;
                     loadTopRated(page);
                 }else{
                     page = 1;
                     getSupportActionBar().setTitle("Popular");
                     item.setIcon(R.drawable.ic_stars);
                     item.setTitle("Popular");
-                    order_by = 0;
+                    orderBy = 0;
                     loadPopular(1);
                 }
                 break;
@@ -100,12 +100,12 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
                                 Movie movie = new Movie();
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 movie.setId(jsonObject.getString("id"));
-                                movie.setPoster_url(Constant.IMAGE_REQUEST_URL +jsonObject.getString("poster_path"));
-                                movie.setBackdrop_url(Constant.IMAGE_REQUEST_URL+jsonObject.getString("backdrop_path"));
+                                movie.setPosterUrl(Constant.IMAGE_REQUEST_URL +jsonObject.getString("poster_path"));
+                                movie.setBackdropUrl(Constant.IMAGE_REQUEST_URL+jsonObject.getString("backdrop_path"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setTitle(jsonObject.getString("title"));
-                                movie.setVote_average(jsonObject.getDouble("vote_average"));
-                                movie.setRelease_date(jsonObject.getString("release_date"));
+                                movie.setVoteAverage(jsonObject.getDouble("vote_average"));
+                                movie.setReleaseDate(jsonObject.getString("release_date"));
                                 movies.add(movie);
                             }
                             movieAdapter.notifyDataSetChanged();
@@ -138,12 +138,12 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
                                 Movie movie = new Movie();
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 movie.setId(jsonObject.getString("id"));
-                                movie.setPoster_url(Constant.IMAGE_REQUEST_URL +jsonObject.getString("poster_path"));
-                                movie.setBackdrop_url(Constant.IMAGE_REQUEST_URL+jsonObject.getString("backdrop_path"));
+                                movie.setPosterUrl(Constant.IMAGE_REQUEST_URL +jsonObject.getString("poster_path"));
+                                movie.setBackdropUrl(Constant.IMAGE_REQUEST_URL+jsonObject.getString("backdrop_path"));
                                 movie.setOverview(jsonObject.getString("overview"));
                                 movie.setTitle(jsonObject.getString("title"));
-                                movie.setVote_average(jsonObject.getDouble("vote_average"));
-                                movie.setRelease_date(jsonObject.getString("release_date"));
+                                movie.setVoteAverage(jsonObject.getDouble("vote_average"));
+                                movie.setReleaseDate(jsonObject.getString("release_date"));
                                 movies.add(movie);
                             }
                             movieAdapter.notifyDataSetChanged();
@@ -160,6 +160,16 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
         );
 
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private int numberOfColumns(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int widthDivider = 400;
+        int widyh = displayMetrics.widthPixels;
+        int nColumna = widyh/widthDivider;
+        if(nColumna<2)return 2;
+        return nColumna;
     }
 
     @Override

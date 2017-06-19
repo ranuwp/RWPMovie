@@ -3,7 +3,6 @@ package id.ranuwp.greetink.rwpmovie;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,31 +12,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import id.ranuwp.greetink.rwpmovie.model.Constant;
 import id.ranuwp.greetink.rwpmovie.model.Movie;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
-    private ImageView backdrop_imageview;
-    private TextView title_textview;
-    private TextView overview_textview;
-    private TextView release_date_textview;
-    private TextView rating_textview;
+    private ImageView backdropImageview;
+    private TextView titleTextview;
+    private TextView overviewTextview;
+    private TextView releaseDateTextview;
+    private TextView ratingTextview;
     private AlertDialog alertDialog;
     private Movie movie;
 
@@ -48,7 +37,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_movie);
         if(getIntent() == null || !getIntent().hasExtra("movie")){
             finish();
-            Toast.makeText(this,"Error in Intent",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getResources().getString(R.string.null_intent_error),Toast.LENGTH_SHORT).show();
             return;
         }
         movie = getIntent().getParcelableExtra("movie");
@@ -61,13 +50,13 @@ public class DetailMovieActivity extends AppCompatActivity {
         alertDialog = dialog.create();
         alertDialog.setCancelable(false);
         alertDialog.show();
-        backdrop_imageview = (ImageView) findViewById(R.id.backdrop_imageview);
-        title_textview = (TextView) findViewById(R.id.title_textview);
-        overview_textview = (TextView) findViewById(R.id.overview_textview);
-        release_date_textview = (TextView) findViewById(R.id.release_date_textview);
-        rating_textview = (TextView) findViewById(R.id.rating_textview);
+        backdropImageview = (ImageView) findViewById(R.id.backdrop_imageview);
+        titleTextview = (TextView) findViewById(R.id.title_textview);
+        overviewTextview = (TextView) findViewById(R.id.overview_textview);
+        releaseDateTextview = (TextView) findViewById(R.id.release_date_textview);
+        ratingTextview = (TextView) findViewById(R.id.rating_textview);
         getSupportActionBar().setTitle(movie.getTitle());
-        Glide.with(DetailMovieActivity.this).asBitmap().load(movie.getBackdrop_url()).listener(new RequestListener<Bitmap>() {
+        Glide.with(DetailMovieActivity.this).asBitmap().load(movie.getBackdropUrl()).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 return false;
@@ -78,11 +67,11 @@ public class DetailMovieActivity extends AppCompatActivity {
                 alertDialog.dismiss();
                 return false;
             }
-        }).into(backdrop_imageview);
-        title_textview.setText(movie.getTitle());
-        overview_textview.setText(movie.getOverview());
-        release_date_textview.setText(movie.getRelease_date());
-        rating_textview.setText(String.valueOf(movie.getVote_average()));
+        }).into(backdropImageview);
+        titleTextview.setText(movie.getTitle());
+        overviewTextview.setText(movie.getOverview());
+        releaseDateTextview.setText(movie.getReleaseDate());
+        ratingTextview.setText(String.valueOf(movie.getVoteAverage()));
     }
 
     public static void toActivity(Context context, Movie movie){

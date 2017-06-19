@@ -7,7 +7,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import id.ranuwp.greetink.rwpmovie.MainActivity;
 import id.ranuwp.greetink.rwpmovie.R;
 import id.ranuwp.greetink.rwpmovie.listener.OnMovieClickListener;
 import id.ranuwp.greetink.rwpmovie.model.Movie;
@@ -28,7 +27,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Movie movie, Context context, final OnMovieClickListener onMovieClickListener){
-        Glide.with(context).load(movie.getPoster_url()).into(poster);
+        Glide.with(context).load(movie.getPosterUrl()).into(poster);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

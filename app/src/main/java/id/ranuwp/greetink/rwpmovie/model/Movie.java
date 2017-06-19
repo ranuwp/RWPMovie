@@ -10,11 +10,11 @@ import android.os.Parcelable;
 public class Movie implements Parcelable{
     private String id;
     private String title;
-    private String poster_url;
-    private String backdrop_url;
+    private String posterUrl;
+    private String backdropUrl;
     private String overview;
-    private double vote_average;
-    private String release_date;
+    private double voteAverage;
+    private String releaseDate;
 
     public Movie() {
     }
@@ -35,20 +35,20 @@ public class Movie implements Parcelable{
         this.title = title;
     }
 
-    public String getPoster_url() {
-        return poster_url;
+    public String getPosterUrl() {
+        return posterUrl;
     }
 
-    public void setPoster_url(String poster_url) {
-        this.poster_url = poster_url;
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
-    public String getBackdrop_url() {
-        return backdrop_url;
+    public String getBackdropUrl() {
+        return backdropUrl;
     }
 
-    public void setBackdrop_url(String backdrop_url) {
-        this.backdrop_url = backdrop_url;
+    public void setBackdropUrl(String backdropUrl) {
+        this.backdropUrl = backdropUrl;
     }
 
     public String getOverview() {
@@ -59,20 +59,20 @@ public class Movie implements Parcelable{
         this.overview = overview;
     }
 
-    public double getVote_average() {
-        return vote_average;
+    public double getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setVote_average(double vote_average) {
-        this.vote_average = vote_average;
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Movie(Parcel parcel){
@@ -80,11 +80,11 @@ public class Movie implements Parcelable{
         parcel.readStringArray(data);
         id = data[0];
         title = data[1];
-        poster_url = data[2];
-        backdrop_url = data[3];
+        posterUrl = data[2];
+        backdropUrl = data[3];
         overview = data[4];
-        vote_average = Double.valueOf(data[5]);
-        release_date = data[6];
+        voteAverage = Double.valueOf(data[5]);
+        releaseDate = data[6];
     }
 
     @Override
@@ -97,11 +97,11 @@ public class Movie implements Parcelable{
         parcel.writeStringArray(new String[]{
                 this.id,
                 this.title,
-                this.poster_url,
-                this.backdrop_url,
+                this.posterUrl,
+                this.backdropUrl,
                 this.overview,
-                String.valueOf(this.vote_average),
-                this.release_date
+                String.valueOf(this.voteAverage),
+                this.releaseDate
         });
     }
 
