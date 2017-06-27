@@ -5,4 +5,7 @@
     <string name="loading_textview">Loading… </string>
     <string name="popular">Popular</string>
     <string name="null_intent_error">Error in Intent</string>
+    <string name="favorites">Favorites</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="favorite">Favorite</string>
 </resources>

@@ -15,6 +15,7 @@ public class Movie implements Parcelable{
     private String overview;
     private double voteAverage;
     private String releaseDate;
+    private boolean favorites;
 
     public Movie() {
     }
@@ -73,6 +74,14 @@ public class Movie implements Parcelable{
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public boolean isFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(boolean favorites) {
+        this.favorites = favorites;
     }
 
     public Movie(Parcel parcel){

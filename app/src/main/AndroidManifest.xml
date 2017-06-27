@@ -22,6 +22,11 @@
         <activity
             android:name=".DetailMovieActivity"
             android:parentActivityName=".MainActivity"/>
+        <provider
+            android:authorities="id.ranuwp.greetink.rwpmovie.moviecontentprovider"
+            android:name=".moviecontentprovider.MovieContentProvider"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
