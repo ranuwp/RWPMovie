@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
 
     private RecyclerView movieRecyclerview;
     private MovieAdapter movieAdapter;
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private ArrayList<Movie> movies;
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
@@ -73,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
             for(Movie movie : temp){
                 movies.add(movie);
             }
+            staggeredGridLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("recyclerview_layoutmanager"));
+            staggeredGridLayoutManager.setSpanCount(numberOfColumns());
+            movieRecyclerview.setLayoutManager(staggeredGridLayoutManager);
             movieAdapter.notifyDataSetChanged();
         }else{
             switch (sharedPreferences.getInt("menu",0)){
@@ -96,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("movies",movies);
+        outState.putParcelable("recyclerview_layoutmanager",movieRecyclerview.getLayoutManager().onSaveInstanceState());
     }
 
     @Override
@@ -106,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnMovieClickListe
     private void setupView() {
         movieRecyclerview = (RecyclerView) findViewById(R.id.movie_recyclerview);
         movies = new ArrayList<>();
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(numberOfColumns(), StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(numberOfColumns(), StaggeredGridLayoutManager.VERTICAL);
         movieAdapter = new MovieAdapter(this, movies, this);
         movieRecyclerview.setLayoutManager(staggeredGridLayoutManager);
         movieRecyclerview.setAdapter(movieAdapter);
